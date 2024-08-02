@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/filter_by_average_cost"
+        android:title="Filter by average cost" />
+
+    <item
+        android:id="@+id/filter_by_distance"
+        android:title="Filter by distance" />
+
+    <item
+        android:id="@+id/filter_by_rating"
+        android:title="Filter by rating" />
+
+</menu>
