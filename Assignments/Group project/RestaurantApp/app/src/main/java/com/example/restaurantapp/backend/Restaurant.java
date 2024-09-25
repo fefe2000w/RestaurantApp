@@ -21,7 +21,7 @@ public class Restaurant {
     private String address;
     private String phoneNumber;
     private List<String> promotionActivities;
-    private List<Menu> menuItems;
+    private List<String> menuItems;
     private List<String> comments;
 
     // Constructor for restaurants searched after confirming location
@@ -44,7 +44,7 @@ public class Restaurant {
     // Constructor for restaurants with detailed info
     public Restaurant(String id, String name, float averageCost, float distance, float rating, String iconURL,
                       String address, String openingTime, String phoneNumber,
-                      List<String> promotionActivities, List<Menu> menuItems, List<String> comments) {
+                      List<String> promotionActivities, List<String> menuItems, List<String> comments) {
         this.id = id;
         this.name = name;
         this.averageCost = averageCost;
@@ -70,7 +70,7 @@ public class Restaurant {
     public String getAddress() { return address; }
     public String getPhoneNumber() { return phoneNumber; }
     public List<String> getPromotionActivities() { return promotionActivities; }
-    public List<Menu> getMenuItems() { return menuItems; }
+    public List<String> getMenuItems() { return menuItems; }
     public List<String> getComments() { return comments; }
 
     public void setName(String name) { this.name = name; }
@@ -82,6 +82,6 @@ public class Restaurant {
     public void setAddress(String address) { this.address = address; }
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
     public void setPromotionActivities(List<String> promotionActivities) { this.promotionActivities = promotionActivities; }
-    public void setMenuItems(List<Menu> menuItems) { this.menuItems = menuItems; }
+    public void setMenuItems(List<String> menuItems) { this.menuItems = menuItems; }
     public void setComments(List<String> comments) { this.comments = comments; }
 }

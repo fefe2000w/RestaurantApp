@@ -83,7 +83,7 @@ public class SearchFragment extends Fragment {
 
         restaurantList.add(new Restaurant("AU-CBR-0001", "Badger", 70.5f, 2.5f, 4.5f, iconUrl1,
                 "123 Badger St", "10:00 AM - 10:00 PM", "123-456-7890", promotions, menu, comments));
-        restaurantList.add(new Restaurant("AU-CBR-0002", "Cafe Lab", 100.6f, 3.5f, 4.0f, iconUrl2,
+        restaurantList.add(new Restaurant("AU-SYD-0002", "Cafe Lab", 100.6f, 3.5f, 4.0f, iconUrl2,
                 "456 Cafe Rd", "9:00 AM - 9:00 PM", "987-654-3210", promotions, menu, comments));
         restaurantList.add(new Restaurant("AU-CBR-0003", "Golden Drum", 54f, 3.0f, 4.8f, iconUrl3,
                 "789 Golden Ave", "11:00 AM - 11:00 PM", "555-123-4567", promotions, menu, comments));
