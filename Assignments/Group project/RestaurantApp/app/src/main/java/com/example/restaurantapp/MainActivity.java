@@ -1,4 +1,5 @@
 package com.example.restaurantapp;
+import com.google.firebase.FirebaseApp;
 
 import android.Manifest;
 import android.content.Intent;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_main);
 
         CheckBox finishReading = findViewById(R.id.finish_reading);

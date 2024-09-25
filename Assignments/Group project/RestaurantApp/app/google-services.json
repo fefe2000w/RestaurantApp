@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "919216931354",
+    "project_id": "restaurantapp-e7cbc",
+    "storage_bucket": "restaurantapp-e7cbc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919216931354:android:64513b9a77733d85c447a3",
+        "android_client_info": {
+          "package_name": "com.example.restaurantapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy9J-WiXLBV69-VXaNGR40FImjRlK3PI4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

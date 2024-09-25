@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.restaurantapp.R;
 import com.example.restaurantapp.backend.Restaurant;
 
@@ -39,7 +41,14 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         Restaurant restaurant = restaurants.get(position);
 
         // 设置数据
-        restaurantIcon.setImageResource(restaurant.getIconResId());
+        String imageURL = restaurant.getIconURL();
+        Glide.with(getContext())
+                .load(imageURL)  // 加载远程URL
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .timeout(60000)// 缓存图片，优化性能
+                .placeholder(R.drawable.placeholder_image)  // 占位图
+                .error(R.drawable.error_image)  // 错误图
+                .into(restaurantIcon);  // 设置 ImageView
         restaurantName.setText(restaurant.getName());
         rating.setText(String.valueOf(restaurant.getRating()) + "★");
         distance.setText("Distance: " + restaurant.getDistance() + " km");

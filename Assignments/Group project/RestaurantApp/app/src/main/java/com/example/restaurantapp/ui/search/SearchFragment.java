@@ -1,5 +1,6 @@
 package com.example.restaurantapp.ui.search;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.example.restaurantapp.adapter.RestaurantAdapter;
 import com.example.restaurantapp.backend.Restaurant;
 import android.widget.ListView;
@@ -49,6 +51,8 @@ public class SearchFragment extends Fragment {
     private static final int FILTER_BY_AVERAGE_COST = 2;
     private static final int FILTER_BY_RATING = 3;
 
+    private static final int REQUEST_CODE = 1;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         SearchViewModel searchViewModel =
@@ -70,12 +74,17 @@ public class SearchFragment extends Fragment {
         List<String> menu = Arrays.asList("Pasta", "Pizza", "Salad");
         List<String> comments = Arrays.asList("Great food!", "Friendly staff!", "Will visit again!");
 
+
         // Example restaurants
-        restaurantList.add(new Restaurant("AU-CBR-0001", "Badger", "$", 2.0f, 4.5f, R.drawable.restaurant_icon_a,
+        String iconUrl1 = convertGsToHttp("gs://restaurantapp-e7cbc.appspot.com/restaurant_icon_a.png");
+        String iconUrl2 = convertGsToHttp("gs://restaurantapp-e7cbc.appspot.com/RestaurantIcon/restaurant_icon_b.png");
+        String iconUrl3 = convertGsToHttp("gs://restaurantapp-e7cbc.appspot.com/RestaurantIcon/restaurant_icon_c.png");
+
+        restaurantList.add(new Restaurant("AU-CBR-0001", "Badger", "$", 2.0f, 4.5f, iconUrl1,
                 "123 Badger St", "10:00 AM - 10:00 PM", "123-456-7890", promotions, menu, comments));
-        restaurantList.add(new Restaurant("AU-CBR-0002", "Cafe Lab", "$$", 1.5f, 4.0f, R.drawable.restaurant_icon_b,
+        restaurantList.add(new Restaurant("AU-CBR-0002", "Cafe Lab", "$$", 1.5f, 4.0f, iconUrl2,
                 "456 Cafe Rd", "9:00 AM - 9:00 PM", "987-654-3210", promotions, menu, comments));
-        restaurantList.add(new Restaurant("AU-CBR-0003", "Golden Drum", "$$$", 3.0f, 4.8f, R.drawable.restaurant_icon_c,
+        restaurantList.add(new Restaurant("AU-CBR-0003", "Golden Drum", "$$$", 3.0f, 4.8f, iconUrl3,
                 "789 Golden Ave", "11:00 AM - 11:00 PM", "555-123-4567", promotions, menu, comments));
 
         // Use RestaurantAdapter
@@ -120,7 +129,7 @@ public class SearchFragment extends Fragment {
                 args.putString("averageCost", selectedRestaurant.getAverageCost());
                 args.putFloat("distance", selectedRestaurant.getDistance());
                 args.putFloat("rating", selectedRestaurant.getRating());
-                args.putInt("iconResId", selectedRestaurant.getIconResId()); // 图标资源 ID
+                args.putString("iconURL", selectedRestaurant.getIconURL()); // 图标资源 ID
                 infoFragment.setArguments(args);
                 // TODO: should have restaurant id instead? don't need to set one by one
 
@@ -132,6 +141,19 @@ public class SearchFragment extends Fragment {
 
         return root;
     }
+
+    public String convertGsToHttp(String gsUrl) {
+        // 确保 gsUrl 是有效的并以 "gs://" 开头
+        if (gsUrl.startsWith("gs://")) {
+            // 从 gs:// 中提取路径
+            String path = gsUrl.substring(5); // 去掉 "gs://"
+
+            // 生成 HTTP URL
+            return "https://firebasestorage.googleapis.com/v0/b/" + path.replace("/", "/o/") + "?alt=media";
+        }
+        return null; // 或者可以抛出异常
+    }
+
 
     private void updateListView(String query, String sortBy, String filterBy) {
         // 假设你有一个数据列表和适配器

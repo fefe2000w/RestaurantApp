@@ -14,7 +14,7 @@ public class Restaurant {
     private String averageCost;
     private float distance;
     private float rating;
-    private int iconResId; // necessary????
+    private String iconURL; // necessary????
 
     // Detailed info. Used on InfoFragment
     private String openingTime;
@@ -33,16 +33,16 @@ public class Restaurant {
     }
 
     // Constructor for restaurants with basic info
-    public Restaurant(String id, String name, float rating, float distance, int iconResId) {
+    public Restaurant(String id, String name, float rating, float distance, String iconURL) {
         this.id = id;
         this.name = name;
         this.rating = rating;
         this.distance = distance;
-        this.iconResId = iconResId;
+        this.iconURL = iconURL;
     }
 
     // Constructor for restaurants with detailed info
-    public Restaurant(String id, String name, String averageCost, float distance, float rating, int iconResId,
+    public Restaurant(String id, String name, String averageCost, float distance, float rating, String iconURL,
                       String address, String openingTime, String phoneNumber,
                       List<String> promotionActivities, List<String> menuItems, List<String> comments) {
         this.id = id;
@@ -50,7 +50,7 @@ public class Restaurant {
         this.averageCost = averageCost;
         this.distance = distance;
         this.rating = rating;
-        this.iconResId = iconResId;
+        this.iconURL = iconURL;
         this.openingTime = openingTime;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -65,7 +65,7 @@ public class Restaurant {
     public String getAverageCost() { return averageCost; }
     public float getDistance() { return distance; }
     public float getRating() { return rating; }
-    public int getIconResId() { return iconResId; }
+    public String getIconURL() { return iconURL; }
     public String getOpeningTime() { return openingTime; }
     public String getAddress() { return address; }
     public String getPhoneNumber() { return phoneNumber; }
@@ -77,7 +77,7 @@ public class Restaurant {
     public void setAverageCost(String averageCost) { this.averageCost = averageCost; }
     public void setDistance(float distance) { this.distance = distance; }
     public void setRating(float rating) { this.rating = rating; }
-    public void setIconResId(int iconResId) { this.iconResId = iconResId; }
+    public void setIconResId(String iconResId) { this.iconURL = iconURL; }
     public void setOpeningTime(String openingTime) { this.openingTime = openingTime; }
     public void setAddress(String address) { this.address = address; }
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
