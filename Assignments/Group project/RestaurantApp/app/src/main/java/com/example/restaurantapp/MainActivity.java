@@ -53,40 +53,40 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.READ_EXTERNAL_STORAGE
         };
 
-        // Check if GPS permission is granted
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            // GPS permission is granted, proceed to the next activity
-            Toast.makeText(this, "You can enable other permissions in settings if needed.", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, ActivityLogin.class));
-        } else {
-            // Request permissions
-            ActivityCompat.requestPermissions(this, permissions, PERMISSION_REQUEST_CODE);
-        }
-    }
-
-    private boolean hasPermissions() {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        // Request all required permissions
+        ActivityCompat.requestPermissions(this, permissions, PERMISSION_REQUEST_CODE);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            boolean gpsGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-            boolean cameraGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-            boolean storageGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
 
-            if (gpsGranted) {
-                // GPS permission granted, proceed to the next activity
-                startActivity(new Intent(this, ActivityLogin.class));
-                if (!cameraGranted || !storageGranted) {
-                    Toast.makeText(this, "You can enable camera and storage permissions in settings if needed.", Toast.LENGTH_LONG).show();
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            boolean gpsGranted = false;
+            String firstDeniedPermission = null;
+
+            // 检查每个权限的状态
+            for (int i = 0; i < permissions.length; i++) {
+                if (permissions[i].equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    gpsGranted = (grantResults[i] == PackageManager.PERMISSION_GRANTED);
+                } else if (grantResults[i] != PackageManager.PERMISSION_GRANTED && firstDeniedPermission == null) {
+                    firstDeniedPermission = permissions[i].replace("android.permission.", "");
                 }
-            } else {
-                // GPS permission denied, show a message
+            }
+
+            if (!gpsGranted) {
+                // GPS 权限被拒绝，提示用户这是必须的
                 Toast.makeText(this, "GPS permission is required to use this app.", Toast.LENGTH_SHORT).show();
+            } else {
+                // GPS 权限已授予，跳转到登录页面
+                startActivity(new Intent(this, ActivityLogin.class));
+            }
+
+            if (firstDeniedPermission != null) {
+                // 其他权限被拒绝，提示用户可以在设置中授权
+                Toast.makeText(this, "Permission denied: " + firstDeniedPermission + ". You can enable it in settings if needed.", Toast.LENGTH_LONG).show();
+                // 仍然跳转到登录页面
+                startActivity(new Intent(this, ActivityLogin.class));
             }
         }
     }
@@ -96,11 +96,9 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle("Notice")
                 .setMessage("Permission is required to use this app.")
                 .setPositiveButton("YES", (dialog, which) -> {
-                    // Return to the previous screen or do nothing
                     Toast.makeText(this, "Please select again", Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("NO", (dialog, which) -> finish())
                 .show();
     }
-
 }

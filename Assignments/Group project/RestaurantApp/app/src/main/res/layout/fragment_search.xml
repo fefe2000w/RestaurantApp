@@ -21,19 +21,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/back_to_home"
-        android:backgroundTint="@color/teal_700"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/search_bar1"
+        android:id="@+id/search_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -42,54 +32,38 @@
         android:ems="10"
         android:inputType="text"
         android:hint="@string/search_bar"
-        app:layout_constraintEnd_toStartOf="@+id/search_button1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_button" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
-        android:id="@+id/search_button1"
+        android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="30dp"
         android:backgroundTint="@color/teal_700"
         android:text="@string/search_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/search_bar1" />
-
-    <Button
-        android:id="@+id/switch_area"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:backgroundTint="@color/teal_700"
-        android:text="@string/switch_area"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar1" />
+        app:layout_constraintStart_toEndOf="@id/search_bar"
+        app:layout_constraintTop_toTopOf="@+id/search_bar" />
 
     <Button
         android:id="@+id/sort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="10dp"
         android:backgroundTint="@color/teal_700"
         android:text="@string/sort"
-        app:layout_constraintEnd_toStartOf="@+id/filter"
-        app:layout_constraintStart_toEndOf="@+id/switch_area"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar1" />
+        app:layout_constraintStart_toStartOf="@id/search_bar"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar" />
 
     <Button
         android:id="@+id/filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="30dp"
         android:backgroundTint="@color/teal_700"
         android:text="@string/filter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar1" />
+        app:layout_constraintEnd_toEndOf="@id/search_bar"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar" />
 
     <ListView
         android:id="@+id/searched_results"
@@ -98,7 +72,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch_area" />
+        app:layout_constraintTop_toBottomOf="@+id/sort" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

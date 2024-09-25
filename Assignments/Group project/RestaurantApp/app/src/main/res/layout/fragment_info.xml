@@ -33,15 +33,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/like_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/teal_700"
+        android:text="@string/like"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/close_button" />
+
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/icon_view"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/close_button"
-        app:srcCompat="@drawable/badger" />
+        app:srcCompat="@drawable/restaurant_icon_a" />
 
     <TextView
         android:id="@+id/info_name"
@@ -51,8 +61,8 @@
         android:text="@string/info_name"
         android:textSize="40sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintStart_toEndOf="@+id/icon_view"
+        app:layout_constraintTop_toTopOf="@+id/icon_view" />
 
     <TextView
         android:id="@+id/info_socre"
@@ -60,7 +70,7 @@
         android:layout_height="wrap_content"
         android:text="@string/info_score"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_view"
         app:layout_constraintStart_toStartOf="@+id/info_name" />
 
     <TextView
@@ -69,7 +79,7 @@
         android:layout_height="wrap_content"
         android:text="@string/info_average_cost"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/icon_view"
         app:layout_constraintEnd_toEndOf="@+id/info_name" />
 
     <TextView
@@ -78,8 +88,8 @@
         android:layout_height="wrap_content"
         android:text="@string/info_basic"
         android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintStart_toStartOf="@+id/icon_view"
+        app:layout_constraintTop_toBottomOf="@+id/icon_view" />
 
     <TextView
         android:id="@+id/info_detailed"
@@ -87,7 +97,7 @@
         android:layout_height="wrap_content"
         android:text="@string/info_detailed"
         android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/icon_view"
         app:layout_constraintTop_toBottomOf="@+id/info_basic" />
 
     <Button

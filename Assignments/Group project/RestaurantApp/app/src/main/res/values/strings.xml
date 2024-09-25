@@ -1,0 +1,80 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">RestaurantApp</string>
+
+    <!-- ActivityWelcome -->
+    <string name="welcomeTitle">User Manual</string>
+    <string name="greeting" formatted="false">
+        Welcome to Yea!\n
+        We are excited to have you here. With Yea, you will get instant access to the latest information about nearby restaurants, making it easier than ever to find the perfect spot for your next meal.\n
+        Whether you are looking for a quick bite or planning a special night out, we are here to help you stay informed and make the best dining choices!
+    </string>
+    <string name="require_permission">To provide you with better service, please authorise access to the following information:</string>
+    <string name="gps_permission">We need access to your location to provide personalized recommendations for nearby restaurants and services, ensuring you get the most relevant and timely information based on where you are.</string>
+    <string name="camera_permission">Access to your camera allows you to quickly capture and share photos directly within the app, enhancing your experience by enabling you to document and review your dining experiences easily.</string>
+    <string name="photo_permission">We require access to your photo gallery to enable you to upload and share images with the app, allowing you to store and access important pictures related to your dining preferences and history.</string>
+    <string name="finish_reading">I have read and agree to the terms of use.</string>
+    <string name="agree_button">Agree</string>
+    <string name="disagree_button">Disagree</string>
+    <string name="title_activity_home">ActivityHome</string>
+    <string name="title_home">Home</string>
+    <string name="title_search">Search</string>
+    <string name="title_account">Account</string>
+
+    <!-- ActivityLogin -->
+    <string name="user_name">Username</string>
+    <string name="password">Password</string>
+    <string name="switch_login">Use SMS verification code to log in</string>
+    <string name="login">Login</string>
+    <string name="register">Not our user yet? Register here</string>
+    <string name="phone_number">Phone number</string>
+    <string name="code">Verification code</string>
+
+    <!-- ActivityRegister -->
+    <string name="user_name1">Username</string>
+    <string name="password1">Password</string>
+    <string name="confirm_password">Confirm</string>
+    <string name="register1">Register</string>
+
+    <!-- FragmentHome -->
+    <string name="switch_city">Location</string>
+    <string name="current_city">Current city</string>
+    <string name="confirm_selection">Confirm selection</string>
+
+    <!-- FragmentSearch -->
+    <string name="search_bar">Restaurants or cuisines</string>
+    <string name="search_button">Search</string>
+    <string name="sort">Sort by</string>
+    <string name="filter">Filter by</string>
+
+    <!-- ListViewRestaurant -->
+    <string name="restaurant_icon"></string>
+
+    <!-- FragmentInfo -->
+    <string name="close">Close</string>
+    <string name="like">Like</string>
+    <string name="info_name">Bader</string>
+    <string name="info_score">4.8</string>
+    <string name="info_average_cost">$$$</string>
+    <string name="info_basic">Open: 11am - 9pm</string>
+    <string name="info_detailed">Centre of ANU, +61048764283</string>
+    <string name="promotion">Promotion</string>
+    <string name="menu">Menu</string>
+    <string name="comment">Comments</string>
+    <string name="booking">Booking</string>
+
+    <!-- FragmentBooking -->
+    <string name="time_slot">Time slot</string>
+    <string name="selected_date">Selected date</string>
+    <string name="selected_timeslot">Selected time slot</string>
+    <string name="number">Number of people</string>
+    <string name="note">Notes</string>
+    <string name="book">Make reservation</string>
+
+    <!-- FragmentAccount -->
+    <string name="username">comp6442@anu.edu.au</string>
+    <string name="nickname">Software Construction</string>
+    <string name="change_password">Change password</string>
+    <string name="favorite_restaurant">Favorites</string>
+    <string name="booking_history">Booking history</string>
+    <string name="comment_history">Comment history</string>
+</resources>

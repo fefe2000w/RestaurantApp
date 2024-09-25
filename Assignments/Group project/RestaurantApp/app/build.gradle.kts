@@ -35,7 +35,9 @@ android {
 }
 
 dependencies {
-
+    implementation("com.google.android.gms:play-services-location:19.0.1")
+    implementation("com.google.android.gms:play-services-maps:18.0.2")
+    implementation("androidx.appcompat:appcompat:1.6.1")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

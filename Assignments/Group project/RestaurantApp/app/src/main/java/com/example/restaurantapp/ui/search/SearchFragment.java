@@ -5,24 +5,26 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import com.example.restaurantapp.adapter.ListAdapter;
+import com.example.restaurantapp.adapter.RestaurantAdapter;
+import com.example.restaurantapp.backend.Restaurant;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.example.restaurantapp.R;
 import com.example.restaurantapp.databinding.FragmentSearchBinding;
+import com.example.restaurantapp.ui.InfoFragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
@@ -30,11 +32,16 @@ public class SearchFragment extends Fragment {
     private FragmentSearchBinding binding;
 
     private EditText search_input;
+    private Button search_button;
+    private Button sort_by;
+    private Button filter_by;
     private ListView searched_results;
+
+    private RestaurantAdapter adapter;
+    private List<Restaurant> restaurantList = new ArrayList<>();
+
     private String sortBy = "distance";
-    private String filterBy = "distannce";
-    private ListAdapter adapter;
-    private List<String> resultsList = new ArrayList<>();
+    private String filterBy = "distance";
     private static final int SORT_BY_DISTANCE = 1;
     private static final int SORT_BY_AVERAGE_COST = 2;
     private static final int SORT_BY_RATING = 3;
@@ -53,36 +60,37 @@ public class SearchFragment extends Fragment {
         final TextView textView = binding.textSearch;
         searchViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        Button back_button = (Button) root.findViewById(R.id.back_button);
-        search_input = (EditText) root.findViewById(R.id.search_bar1);
-        Button search_button = (Button) root.findViewById(R.id.search_button1);
-        searched_results = (ListView) root.findViewById(R.id.searched_results);
-        Button switch_area = (Button) root.findViewById(R.id.switch_area);
-        Button sort_by = (Button) root.findViewById(R.id.sort);
-        Button filter_by = (Button) root.findViewById(R.id.filter);
+        search_input = root.findViewById(R.id.search_bar);
+        search_button = root.findViewById(R.id.search_button);
+        searched_results = root.findViewById(R.id.searched_results);
+        sort_by = root.findViewById(R.id.sort);
+        filter_by = root.findViewById(R.id.filter);
 
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_home);
+        List<String> promotions = Arrays.asList("Happy Hour 5-7 PM", "Free Dessert with Meal");
+        List<String> menu = Arrays.asList("Pasta", "Pizza", "Salad");
+        List<String> comments = Arrays.asList("Great food!", "Friendly staff!", "Will visit again!");
 
-        back_button.setOnClickListener(new View.OnClickListener() {
+        // Example restaurants
+        restaurantList.add(new Restaurant("AU-CBR-0001", "Badger", "$", 2.0f, 4.5f, R.drawable.restaurant_icon_a,
+                "123 Badger St", "10:00 AM - 10:00 PM", "123-456-7890", promotions, menu, comments));
+        restaurantList.add(new Restaurant("AU-CBR-0002", "Cafe Lab", "$$", 1.5f, 4.0f, R.drawable.restaurant_icon_b,
+                "456 Cafe Rd", "9:00 AM - 9:00 PM", "987-654-3210", promotions, menu, comments));
+        restaurantList.add(new Restaurant("AU-CBR-0003", "Golden Drum", "$$$", 3.0f, 4.8f, R.drawable.restaurant_icon_c,
+                "789 Golden Ave", "11:00 AM - 11:00 PM", "555-123-4567", promotions, menu, comments));
+
+        // Use RestaurantAdapter
+        adapter = new com.example.restaurantapp.adapter.RestaurantAdapter(getContext(), restaurantList);
+        searched_results.setAdapter(adapter);
+
+        search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigateUp();
+                String searchQuery = search_input.getText().toString();
+                updateListView(searchQuery, sortBy, filterBy);
             }
         });
 
-        resultsList.add("Badger");
-        adapter = new com.example.restaurantapp.adapter.ListAdapter(getContext(), resultsList);
-        searched_results.setAdapter(adapter);
-
-        Bundle args = getArguments();
-        if (args != null) {
-            String search_string = args.getString("search_query");
-            if (!search_string.isEmpty()) {
-                search_input.setText(search_string);
-                updateListView(search_string, sortBy);
-            }
-        }
-
+        // Todo: need to update list -- renew sortBy and filterBy (default?)
         sort_by.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,37 +105,64 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        search_button.setOnClickListener(new View.OnClickListener() {
+        // Click event on searched_results list
+        searched_results.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                String searchQuery = search_input.getText().toString();
-                updateListView(searchQuery, sortBy);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Restaurant selectedRestaurant = restaurantList.get(position);
+
+                // Create corresponding InfoFragment
+                InfoFragment infoFragment = new InfoFragment();
+
+                // Pass restaurant information to InfoFragment
+                Bundle args = new Bundle();
+                args.putString("name", selectedRestaurant.getName());
+                args.putString("averageCost", selectedRestaurant.getAverageCost());
+                args.putFloat("distance", selectedRestaurant.getDistance());
+                args.putFloat("rating", selectedRestaurant.getRating());
+                args.putInt("iconResId", selectedRestaurant.getIconResId()); // 图标资源 ID
+                infoFragment.setArguments(args);
+                // TODO: should have restaurant id instead? don't need to set one by one
+
+                // Show InfoFragment
+                FragmentManager fragmentManager = getParentFragmentManager();
+                infoFragment.show(fragmentManager, "InfoFragment");
             }
         });
-
-
-
 
         return root;
     }
 
-    private void updateListView(String query, String sortBy) {
+    private void updateListView(String query, String sortBy, String filterBy) {
         // 假设你有一个数据列表和适配器
-        List<String> sortedDataList = getResults(query, sortBy);
-        sortedDataList.add(0, "Badger");
-        adapter.clear();
-        adapter.addAll(sortedDataList);
-        adapter.notifyDataSetChanged();
+        List<Restaurant> sortedDataList = getResults(query, sortBy, filterBy);
+        adapter.setData(sortedDataList);
     }
 
-    private List<String> getResults(String query, String sort_or_filter) {
+    private List<Restaurant> getResults(String query, String sortBy, String filterBy) {
         // 根据查询内容从数据源获取数据，这里是示例
-        List<String> results = new ArrayList<>();
-        if (query.isEmpty()) {
-            // 返回默认数据
-        } else {
-            // 返回匹配查询内容的数据
+        List<Restaurant> results = new ArrayList<>();
+        for (Restaurant restaurant : restaurantList) {
+            if (restaurant.getName().toLowerCase().contains(query.toLowerCase())) {
+                results.add(restaurant);
+            }
         }
+        // 2. 根据 filterBy 进行过滤
+        if (filterBy.equals("Distance")) {
+            results = filterByDistance(results);  // 你可以实现自定义的过滤逻辑
+        } else if (filterBy.equals("Average cost")) {
+            results = filterByCost(results);
+        } else if (filterBy.equals("Rating")) {
+            results = filterByRating(results);
+        }
+
+        // 3. 根据 sortBy 进行排序
+        if (sortBy.equals("Distance")) {
+            results.sort((r1, r2) -> Float.compare(r2.getDistance(), r1.getDistance()));  // 假设 getDistance() 返回 String
+        }  else if (sortBy.equals("Rating")) {
+            results.sort((r1, r2) -> Float.compare(r2.getRating(), r1.getRating()));  // 按评分降序排列
+        }
+
         return results;
     }
 
@@ -151,7 +186,7 @@ public class SearchFragment extends Fragment {
                 }
                 // 获取当前的搜索内容并更新列表
                 String searchQuery = search_input.getText().toString();
-                updateListView(searchQuery, sortBy);
+                updateListView(searchQuery, sortBy, filterBy);
                 return true;
             }
         });
@@ -179,12 +214,42 @@ public class SearchFragment extends Fragment {
                 }
                 // 获取当前的搜索内容并更新列表
                 String searchQuery = search_input.getText().toString();
-                updateListView(searchQuery, filterBy);
+                updateListView(searchQuery, sortBy, filterBy);
                 return true;
             }
         });
 
         popupMenu.show();
+    }
+
+    private List<Restaurant> filterByDistance(List<Restaurant> restaurants) {
+        List<Restaurant> filteredList = new ArrayList<>();
+        for (Restaurant restaurant : restaurants) {
+            if (restaurant.getDistance()<2) {  // 你可以根据实际需求进行过滤
+                filteredList.add(restaurant);
+            }
+        }
+        return filteredList;
+    }
+
+    private List<Restaurant> filterByCost(List<Restaurant> restaurants) {
+        List<Restaurant> filteredList = new ArrayList<>();
+        for (Restaurant restaurant : restaurants) {
+            if (!restaurant.getAverageCost().equals("$$$")) {  // 你可以根据需求设置条件
+                filteredList.add(restaurant);
+            }
+        }
+        return filteredList;
+    }
+
+    private List<Restaurant> filterByRating(List<Restaurant> restaurants) {
+        List<Restaurant> filteredList = new ArrayList<>();
+        for (Restaurant restaurant : restaurants) {
+            if (restaurant.getRating() >= 4.0) {  // 过滤评分大于或等于 4 的餐馆
+                filteredList.add(restaurant);
+            }
+        }
+        return filteredList;
     }
 
 

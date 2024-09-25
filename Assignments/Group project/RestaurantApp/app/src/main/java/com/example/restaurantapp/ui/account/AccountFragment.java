@@ -1,4 +1,4 @@
-package com.example.restaurantapp.ui.dashboard;
+package com.example.restaurantapp.ui.account;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,23 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.restaurantapp.R;
-import com.example.restaurantapp.databinding.FragmentDashboardBinding;
+import com.example.restaurantapp.databinding.FragmentAccountBinding;
 import com.example.restaurantapp.ui.ChangePasswordFragment;
 
-public class DashboardFragment extends Fragment {
+public class AccountFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentAccountBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        AccountViewModel accountViewModel =
+                new ViewModelProvider(this).get(AccountViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentAccountBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textAccount;
+        accountViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         Button change_password = (Button) root.findViewById(R.id.change_password);
         change_password.setOnClickListener(new View.OnClickListener() {
