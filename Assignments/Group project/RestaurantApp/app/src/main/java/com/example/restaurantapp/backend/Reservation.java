@@ -1,13 +1,15 @@
 package com.example.restaurantapp.backend;
 
 public class Reservation {
+    private String bookID;
     private String date;
     private String timeSlot;
     private int numberOfPeople;
     private String note;
 
     // 构造函数
-    public Reservation(String date, String timeSlot, int numberOfPeople, String note) {
+    public Reservation(String bookID, String date, String timeSlot, int numberOfPeople, String note) {
+        this.bookID = bookID;
         this.date = date;
         this.timeSlot = timeSlot;
         this.numberOfPeople = numberOfPeople;
@@ -15,6 +17,12 @@ public class Reservation {
     }
 
     // Getter 和 Setter 方法
+    public void setBookID(String bookID) {
+        this.bookID = bookID;
+    }
+    public String getBookID() {
+        return bookID;
+    }
     public String getDate() {
         return date;
     }

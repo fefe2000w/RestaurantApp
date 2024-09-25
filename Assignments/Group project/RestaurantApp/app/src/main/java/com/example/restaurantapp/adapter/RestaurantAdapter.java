@@ -27,35 +27,42 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.list_item_restaurant, parent, false);
+            holder = new ViewHolder();
+            holder.icon = convertView.findViewById(R.id.restaurant_icon);
+            holder.name = convertView.findViewById(R.id.restaurant_name);
+            holder.rating = convertView.findViewById(R.id.rating);
+            holder.distance = convertView.findViewById(R.id.distance);
+            holder.averageCost = convertView.findViewById(R.id.average_cost);
+            convertView.setTag(holder);  // 将 ViewHolder 绑定到 convertView
+        } else {
+            holder = (ViewHolder) convertView.getTag();  // 重新使用现有的 ViewHolder
         }
 
-        ImageView restaurantIcon = convertView.findViewById(R.id.restaurant_icon);
-        TextView restaurantName = convertView.findViewById(R.id.restaurant_name);
-        TextView rating = convertView.findViewById(R.id.rating);
-        TextView distance = convertView.findViewById(R.id.distance);
-        TextView averageCost = convertView.findViewById(R.id.average_cost);
-
-        // 假设有一个 Restaurant 对象
+        // 获取 Restaurant 对象
         Restaurant restaurant = restaurants.get(position);
 
         // 设置数据
         String imageURL = restaurant.getIconURL();
         Glide.with(getContext())
-                .load(imageURL)  // 加载远程URL
+                .load(imageURL)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .timeout(60000)// 缓存图片，优化性能
-                .placeholder(R.drawable.placeholder_image)  // 占位图
-                .error(R.drawable.error_image)  // 错误图
-                .into(restaurantIcon);  // 设置 ImageView
-        restaurantName.setText(restaurant.getName());
-        rating.setText(String.valueOf(restaurant.getRating()) + "★");
-        distance.setText("Distance: " + restaurant.getDistance() + " km");
-        averageCost.setText("Average Cost: " + restaurant.getAverageCost());
+                .timeout(60000)
+                .placeholder(R.drawable.placeholder_image)
+                .error(R.drawable.error_image)
+                .into(holder.icon);  // 使用 ViewHolder
+
+        holder.name.setText(restaurant.getName());
+        holder.rating.setText(String.valueOf(restaurant.getRating()) + "★");
+        holder.distance.setText("Distance: " + restaurant.getDistance() + " km");
+        holder.averageCost.setText("Average Cost: $" + restaurant.getAverageCost());
 
         return convertView;
     }
+
 
     static class ViewHolder {
         ImageView icon;

@@ -20,6 +20,7 @@ import com.example.restaurantapp.R;
 import com.example.restaurantapp.backend.Reservation;
 
 public class BookingFragment extends DialogFragment {
+    private String bookID;
     private String selectedDate;
     private String selectedTimeSlot;
     private int numberOfPeople;
@@ -39,9 +40,9 @@ public class BookingFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_booking, container, false);
 
-        TextView textView = view.findViewById(R.id.full_screen_text1);
+        TextView textView = view.findViewById(R.id.full_screen_text_fragment_booking);
         calendar = view.findViewById(R.id.calendar);
-        close_button = view.findViewById(R.id.close_button1);
+        close_button = view.findViewById(R.id.close_button_fragment_booking);
         select_timeslot = view.findViewById(R.id.time_slot);
         selected_date = view.findViewById(R.id.selected_date);
         selected_timeslot = view.findViewById(R.id.selected_timeslot);
@@ -63,13 +64,14 @@ public class BookingFragment extends DialogFragment {
 
         select_timeslot.setOnClickListener(v -> showTimeSlotPicker());
         book_button.setOnClickListener(v -> {
+            bookID = "hajkhsdk";
             // 获取输入的数据
             numberOfPeople = Integer.parseInt(number_of_people.getText().toString());
             note = note_optional.getText().toString();
 
             // 创建 Reservation 对象并保存到数据库
             if (selectedDate != null && selectedTimeSlot != null && numberOfPeople > 0) {
-                Reservation reservation = new Reservation(selectedDate, selectedTimeSlot, numberOfPeople, note);
+                Reservation reservation = new Reservation(bookID, selectedDate, selectedTimeSlot, numberOfPeople, note);
                 saveReservationToDatabase(reservation);
                 Toast.makeText(getContext(), "Reservation made!", Toast.LENGTH_SHORT).show();
                 dismiss();

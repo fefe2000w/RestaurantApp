@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/full_screen_text1"
+        android:id="@+id/full_screen_text_fragment_booking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/close_button1"
+        android:id="@+id/close_button_fragment_booking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/close_button1" />
+        app:layout_constraintTop_toBottomOf="@+id/close_button_fragment_booking" />
 
     <Button
         android:id="@+id/time_slot"
